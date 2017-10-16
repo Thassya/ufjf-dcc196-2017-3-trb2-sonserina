@@ -1,4 +1,4 @@
-package com.sonserina.ufjf.sonserinapride;
+package com.sonserina.ufjf.slytherinpride;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

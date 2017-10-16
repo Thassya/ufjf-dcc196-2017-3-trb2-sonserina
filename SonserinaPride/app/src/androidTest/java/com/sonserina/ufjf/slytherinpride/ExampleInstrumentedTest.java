@@ -1,4 +1,4 @@
-package com.sonserina.ufjf.sonserinapride;
+package com.sonserina.ufjf.slytherinpride;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
