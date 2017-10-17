@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sonserina.ufjf.slytherinpride.MainActivity">
+    tools:context="com.sonserina.ufjf.slytherinpride.activity.MainActivity">
 
     <Button
         android:id="@+id/btnCadastrarParticipante"
@@ -38,7 +38,8 @@
         android:text="Cadastrar Livros"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/btnCadastrarParticipante"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteY="16dp"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <ListView
         android:id="@+id/lstParticipantes"
