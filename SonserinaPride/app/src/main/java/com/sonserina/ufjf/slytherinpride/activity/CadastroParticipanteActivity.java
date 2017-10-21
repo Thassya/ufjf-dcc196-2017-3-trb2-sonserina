@@ -52,6 +52,7 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
                     ParticipanteHelper.getInstance().addParticipante(p);
                     txtNomeParticipante.setText("");
                     txtEmailParticipante.setText("");
+                    txtNomeParticipante.requestFocus();
                 }
             }
         });

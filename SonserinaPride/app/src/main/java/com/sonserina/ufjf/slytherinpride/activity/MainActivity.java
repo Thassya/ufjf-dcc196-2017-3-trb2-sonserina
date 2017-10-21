@@ -46,12 +46,20 @@ public class MainActivity extends AppCompatActivity {
         btnCadastrarParticipante.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CadastroParticipanteActivity.class);
-                intent.putExtra("activity_title", getResources().getString(R.string.cadastroParticipante));
+                Intent intent = new Intent(
+                        MainActivity.this, CadastroParticipanteActivity.class
+                );
+//                intent.putExtra("activity_title", getResources().getString(R.string.cadastroParticipante));
                 startActivity(intent);
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        participanteAdapter.notifyDataSetChanged();
+        super.onResume();
     }
 
 }
