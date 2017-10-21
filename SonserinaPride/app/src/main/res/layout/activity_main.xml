@@ -8,38 +8,40 @@
 
     <Button
         android:id="@+id/btnCadastrarParticipante"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="160dp"
+        android:layout_height="63dp"
         android:text="Cadastrar Participante"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginRight="32dp"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:layout_marginTop="16dp" />
 
     <Button
         android:id="@+id/btnCadastraReserva"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cadastrar Reserva"
-        tools:layout_editor_absoluteY="72dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="90dp" />
 
     <Button
         android:id="@+id/btnCadastraLivros"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:layout_width="152dp"
+        android:layout_height="60dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:text="Cadastrar Livros"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/btnCadastrarParticipante"
-        tools:layout_editor_absoluteY="16dp"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.166"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp" />
 
     <ListView
         android:id="@+id/lstParticipantes"
