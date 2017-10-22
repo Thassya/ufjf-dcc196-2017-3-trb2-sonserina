@@ -3,4 +3,20 @@
     <string name="cadastroParticipante">Cadastrar Participante</string>
     <string name="nomeObrigatorio">Nome do participante é obrigatório</string>
     <string name="emailObrigatorio">Email do participante é obrigatório</string>
+    <string name="cadastroLivros">Cadastro de Livros</string>
+    <string name="tituloObrigatorio">Título Obrigatório</string>
+    <string name="editoraObrigatorio">Editora Obrigatório</string>
+    <string name="anoObrigatorio">Ano Obrigatório</string>
+    <string name="anoInteiro">Ano deve ser um número</string>
+    <string name="anoValido">Ano deve ser no máximo o atual</string>
+    <string name="cadastroReserva">Cadastro de Reserva</string>
+    <string name="selecioneParticipante">Selecione um Participante</string>
+    <string name="selecioneLivro">Selecione um Livro</string>
+    <string name="entrada">Entrada Registrada!</string>
+    <string name="saida">Saída Registrada!</string>
+    <string name="anulado">Registros anulados</string>
+    <string name="detalhesParticipante">Detalhes Participante</string>
+    <string name="detalhesLivro">Detalhe Livros</string>
+
+
 </resources>

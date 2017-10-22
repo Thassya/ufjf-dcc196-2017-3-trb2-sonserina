@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.sonserina.ufjf.slytherinpride.R;
 import com.sonserina.ufjf.slytherinpride.helper.ParticipanteHelper;
@@ -43,7 +44,7 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
                     txtNomeParticipante.setError(getResources().getString(R.string.nomeObrigatorio));
                     txtNomeParticipante.requestFocus();
                 }
-                else if(email.isEmpty()){
+                if(email.isEmpty()){
                     txtEmailParticipante.setError(getResources().getString(R.string.emailObrigatorio));
                     txtEmailParticipante.requestFocus();
                 }
@@ -53,6 +54,8 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
                     txtNomeParticipante.setText("");
                     txtEmailParticipante.setText("");
                     txtNomeParticipante.requestFocus();
+
+                    Toast.makeText(CadastroParticipanteActivity.this, "Participante cadastrado!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
