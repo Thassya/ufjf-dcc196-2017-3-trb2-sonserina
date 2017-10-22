@@ -1,6 +1,7 @@
 package com.sonserina.ufjf.slytherinpride.activity;
 
 import android.content.Intent;
+import android.icu.text.MessagePattern;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -105,6 +106,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        lstParticipantes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Participante part = participanteAdapter.getItem(position);
+                Intent in = new Intent(MainActivity.this, LivroActivity.class);
+                in.putExtra("participante", part);
+                startActivity(in);
+            }
+        });
 
         lstLivros.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

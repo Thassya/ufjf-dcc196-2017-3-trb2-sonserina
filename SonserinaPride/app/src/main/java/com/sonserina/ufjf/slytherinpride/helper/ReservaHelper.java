@@ -2,6 +2,7 @@ package com.sonserina.ufjf.slytherinpride.helper;
 
 import android.widget.ListView;
 
+import com.sonserina.ufjf.slytherinpride.models.Livro;
 import com.sonserina.ufjf.slytherinpride.models.Participante;
 import com.sonserina.ufjf.slytherinpride.models.Reserva;
 
@@ -29,7 +30,7 @@ public class ReservaHelper {
         lstReservas.add(reserva);
     }
 
-    public List<Reserva> getLstReservasParticipante(Participante p){
+    public List<Reserva> getLstReservasParticipantes(Participante p){
         List<Reserva> resposta = new ArrayList<>();
         for(Reserva r : lstReservas){
             if(r.getParticipante().equals(p))
@@ -38,6 +39,14 @@ public class ReservaHelper {
         return resposta;
     }
 
-    public List<Reserva> getLstReservas
+    public List<Reserva> getLstReservasLivros(Livro livro){
+        List<Reserva> resposta = new ArrayList<>();
+        for(Reserva r : lstReservas){
+            if(r.getLivro().equals(livro)) {
+                resposta.add(r);
+            }
+        }
+        return resposta;
+    }
 
 }

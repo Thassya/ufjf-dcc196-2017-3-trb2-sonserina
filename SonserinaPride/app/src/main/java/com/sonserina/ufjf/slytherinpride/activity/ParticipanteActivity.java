@@ -49,7 +49,7 @@ public class ParticipanteActivity extends AppCompatActivity {
             txtEmail.setText(par.getEmail());
             txtSaida.setText(par.getDataSaida().toString());
 
-            reservaAdapter = new ReservaAdapter(getApplicationContext(), ReservaHelper.getInstance().getLstReservasParticipante(par));
+            reservaAdapter = new ReservaAdapter(getApplicationContext(), ReservaHelper.getInstance().getLstReservasParticipantes(par));
             lstReservas.setAdapter(reservaAdapter);
         }
 
