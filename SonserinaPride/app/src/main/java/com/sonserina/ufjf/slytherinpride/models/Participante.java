@@ -26,13 +26,6 @@ public class Participante implements Parcelable  {
         this.dataSaida = null;
     }
 
-    public Participante(String nome, String email, Date dataEntrada) {
-        this.nome = nome;
-        this.email = email;
-        this.dataEntrada = dataEntrada;
-        this.dataSaida=null;
-    }
-
     private Participante(Parcel from){
         nome = from.readString();
         email = from.readString();
