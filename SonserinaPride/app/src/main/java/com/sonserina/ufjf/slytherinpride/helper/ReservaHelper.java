@@ -33,8 +33,9 @@ public class ReservaHelper {
     public List<Reserva> getLstReservasParticipantes(Participante p){
         List<Reserva> resposta = new ArrayList<>();
         for(Reserva r : lstReservas){
-            if(r.getParticipante().equals(p))
+            if(p.equals(r.getParticipante())) {
                 resposta.add(r);
+            }
         }
         return resposta;
     }
@@ -42,7 +43,7 @@ public class ReservaHelper {
     public List<Reserva> getLstReservasLivros(Livro livro){
         List<Reserva> resposta = new ArrayList<>();
         for(Reserva r : lstReservas){
-            if(r.getLivro().equals(livro)) {
+            if(livro.equals(r.getLivro())) {
                 resposta.add(r);
             }
         }

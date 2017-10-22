@@ -26,8 +26,8 @@ public class ParticipanteHelper {
     private void populaParticipantes() {
         lstParticipantes = new ArrayList<>();
         lstParticipantes.add(new Participante("Snape Boladão", "snap@ice.ufjf.br"));
-        lstParticipantes.add(new Participante("Valdemort Bonzinho", "vaval@ice.ufjf.br"));
-        lstParticipantes.add(new Participante("Minervão", "minerva@ice.ufjf.br"));
+        lstParticipantes.add(new Participante("Valdemort Vaval", "vaval@ice.ufjf.br"));
+        lstParticipantes.add(new Participante("Minervão Gatão", "minerva@ice.ufjf.br"));
     }
 
 

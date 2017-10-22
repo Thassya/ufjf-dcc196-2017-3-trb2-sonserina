@@ -38,11 +38,11 @@ public class LivroActivity extends AppCompatActivity {
         btnVoltar = (Button)findViewById(R.id.btnVoltar);
 
         Intent it = getIntent();
-        Livro livro = it.getParcelableExtra("participante");
+        Livro livro = it.getParcelableExtra("livro");
         if(livro!=null){
             txtTitulo.setText(livro.getTitulo());
             txtEditora.setText(livro.getEditora());
-            txtAno.setText(livro.getAno().toString());
+            txtAno.setText(String.valueOf(livro.getAno()));
 
             reservaAdapter = new ReservaAdapter(getApplicationContext(), ReservaHelper.getInstance().getLstReservasLivros(livro));
             lstParticipantes.setAdapter(reservaAdapter);

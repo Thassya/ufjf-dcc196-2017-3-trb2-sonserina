@@ -29,6 +29,7 @@ public class Livro implements Parcelable {
     protected Livro(Parcel in) {
         titulo = in.readString();
         editora = in.readString();
+        ano = in.readInt();
         reservas = in.createTypedArrayList(Participante.CREATOR);
     }
 
@@ -91,6 +92,16 @@ public class Livro implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(titulo);
         dest.writeString(editora);
+        dest.writeInt(ano);
         dest.writeTypedList(reservas);
+    }
+
+    @Override
+    public boolean equals(Object livro) {
+        if (titulo.equals(((Livro) livro).getTitulo())
+                && this.editora.equals(((Livro) livro).getEditora())){
+            return true;
+        }
+        return false;
     }
 }

@@ -89,9 +89,18 @@ public class Participante implements Parcelable  {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(email);
         dest.writeString(nome);
+        dest.writeString(email);
         dest.writeLong(dataEntrada == null ? -1 : dataEntrada.getTime());
         dest.writeLong(dataSaida == null ? -1 : dataSaida.getTime());
+    }
+
+    @Override
+    public boolean equals(Object participante) {
+        if (nome.equals(((Participante) participante).getNome())
+                && this.email.equals(((Participante) participante).getEmail())){
+            return true;
+        }
+        return false;
     }
 }

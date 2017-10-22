@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Participante part = participanteAdapter.getItem(position);
-                Intent in = new Intent(MainActivity.this, LivroActivity.class);
+                Intent in = new Intent(MainActivity.this, ParticipanteActivity.class);
                 in.putExtra("participante", part);
                 startActivity(in);
             }

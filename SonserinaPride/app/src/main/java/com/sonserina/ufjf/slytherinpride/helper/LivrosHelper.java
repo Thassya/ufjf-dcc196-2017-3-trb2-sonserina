@@ -45,7 +45,10 @@ public class LivrosHelper {
     private void populaLivros() {
         lstLivros = new ArrayList<>();
         lstLivros.add(new Livro("Harry Potter", "Racco", 2012));
-        lstLivros.add(new Livro("Guia do Mochileiro das Galáxias", "Publisher", 2010));
+        lstLivros.add(new Livro("Piadas Nerds", "Verus Editora", 2011));
+        lstLivros.add(new Livro("Geekerela", "Intrinseca", 2017));
+        lstLivros.add(new Livro("KILORIAS", "Benvirá", 2014));
+
     }
 
 }
