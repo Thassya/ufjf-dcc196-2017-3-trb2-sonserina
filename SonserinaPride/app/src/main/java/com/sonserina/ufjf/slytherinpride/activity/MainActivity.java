@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Toast.makeText(MainActivity.this, getResources().getText(R.string.anulado), Toast.LENGTH_SHORT).show();
                 }
-                return false;
+                return true;
             }
         });
 
