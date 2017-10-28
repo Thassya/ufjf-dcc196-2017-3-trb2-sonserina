@@ -1,5 +1,7 @@
 package com.sonserina.ufjf.slytherinpride.activity;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,6 +11,8 @@ import android.widget.Toast;
 
 import com.sonserina.ufjf.slytherinpride.R;
 import com.sonserina.ufjf.slytherinpride.adapter.LivrosAdapter;
+import com.sonserina.ufjf.slytherinpride.dao.FeiraLivrosContract;
+import com.sonserina.ufjf.slytherinpride.dao.FeiraLivrosDBHelper;
 import com.sonserina.ufjf.slytherinpride.helper.LivrosHelper;
 import com.sonserina.ufjf.slytherinpride.models.Livro;
 
@@ -25,11 +29,15 @@ public class CadastroLivrosActivity extends AppCompatActivity {
     private EditText txtEditora;
     private EditText txtAno;
 
+    private FeiraLivrosDBHelper helper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cadastro_livro);
+
+        helper = new FeiraLivrosDBHelper(getApplicationContext());
 
         btnSalvarLivro = (Button) findViewById(R.id.btnSalvarLivro);
         btnVoltarLivro = (Button) findViewById(R.id.btnVoltarLivro);
@@ -67,13 +75,20 @@ public class CadastroLivrosActivity extends AppCompatActivity {
 
                 else {
                     Livro livro = new Livro(titulo, editora, Integer.parseInt(ano));
-                    LivrosHelper.getInstance().addLivro(livro);
+                    //LivrosHelper.getInstance().addLivro(livro);
+                    SQLiteDatabase db = helper.getWritableDatabase();
+                    ContentValues valores = new ContentValues();
+                    valores.put(FeiraLivrosContract.Livro.COLUMN_NAME_TITULO, livro.getTitulo());
+                    valores.put(FeiraLivrosContract.Livro.COLUMN_NAME_EDITORA, livro.getEditora());
+                    valores.put(FeiraLivrosContract.Livro.COLUMN_NAME_ANO, livro.getAno());
+                    db.insert(FeiraLivrosContract.Livro.TABLE_NAME,null,valores);
+
                     txtTitulo.setText("");
                     txtEditora.setText("");
                     txtAno.setText("");
                     txtTitulo.requestFocus();
 
-                    Toast.makeText(CadastroLivrosActivity.this, "Livro cadastrado!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CadastroLivrosActivity.this, livro.getTitulo() + " cadastrado!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
