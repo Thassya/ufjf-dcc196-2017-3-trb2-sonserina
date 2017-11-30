@@ -13,6 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sonserina.ufjf.slytherinpride.R;
+import com.sonserina.ufjf.slytherinpride.adapter.LivrosAdapter;
+import com.sonserina.ufjf.slytherinpride.adapter.ParticipanteAdapter;
+import com.sonserina.ufjf.slytherinpride.adapter.ReservaAdapter;
 import com.sonserina.ufjf.slytherinpride.helper.LivrosHelper;
 import com.sonserina.ufjf.slytherinpride.helper.ParticipanteHelper;
 import com.sonserina.ufjf.slytherinpride.helper.ReservaHelper;
@@ -31,6 +34,10 @@ public class CadastroReseraActivity extends AppCompatActivity {
     private Spinner spnParticipantes;
     private Spinner spnLivros;
 
+    private ReservaAdapter reservaAdapter;
+    private LivrosAdapter livrosAdapter;
+    private ParticipanteAdapter participanteAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,15 +48,15 @@ public class CadastroReseraActivity extends AppCompatActivity {
         spnParticipantes = (Spinner) findViewById(R.id.spnParticipantes);
         spnLivros = (Spinner) findViewById(R.id.spnLivros);
 
+        livrosAdapter = new LivrosAdapter(getBaseContext(),null);
+        participanteAdapter = new ParticipanteAdapter(getBaseContext(),null);
+        reservaAdapter = new ReservaAdapter(getBaseContext(),null);
+        livrosAdapter.atualizar();
+        participanteAdapter.atualizar();
 
 
-        ArrayAdapter<Livro> livroAdapter = new ArrayAdapter<Livro>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, LivrosHelper.getInstance().getListaLivros());
-        livroAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        spnLivros.setAdapter(livroAdapter);
-
-        ArrayAdapter<Participante> participanteAdapter = new ArrayAdapter<Participante>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, ParticipanteHelper.getInstance().getParticipantesNoEvento());
-        participanteAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spnParticipantes.setAdapter(participanteAdapter);
+        spnLivros.setAdapter(livrosAdapter);
 
 
         btnSalvarReserva.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +71,8 @@ public class CadastroReseraActivity extends AppCompatActivity {
                 else {
                     Participante p = (Participante) spnParticipantes.getSelectedItem();
                     Livro l = (Livro) spnLivros.getSelectedItem();
-                    ReservaHelper.getInstance().addReserva(new Reserva(p, l));
+
+                    reservaAdapter.inserirReserva(livrosAdapter.getId(spnLivros.getSelectedItemPosition()),participanteAdapter.getId(spnParticipantes.getSelectedItemPosition()));
 
                     spnParticipantes.setSelection(0);
                     spnLivros.setSelection(0);
@@ -78,6 +86,7 @@ public class CadastroReseraActivity extends AppCompatActivity {
         btnVoltarReserva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setResult(RESULT_CANCELED);
                 finish();
             }
         });

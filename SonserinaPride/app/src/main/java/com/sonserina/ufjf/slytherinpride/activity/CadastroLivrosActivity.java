@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.sonserina.ufjf.slytherinpride.R;
+import com.sonserina.ufjf.slytherinpride.adapter.LivrosAdapter;
 import com.sonserina.ufjf.slytherinpride.dao.FeiraLivrosDBHelper;
 import com.sonserina.ufjf.slytherinpride.models.Livro;
 
@@ -26,7 +27,7 @@ public class CadastroLivrosActivity extends AppCompatActivity {
     private EditText txtEditora;
     private EditText txtAno;
 
-    private FeiraLivrosDBHelper helper;
+    private LivrosAdapter livrosAdapter;
 
 
     @Override
@@ -34,7 +35,7 @@ public class CadastroLivrosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cadastro_livro);
 
-        helper = new FeiraLivrosDBHelper(getApplicationContext());
+        livrosAdapter = new LivrosAdapter(getBaseContext(),null);
 
         btnSalvarLivro = (Button) findViewById(R.id.btnSalvarLivro);
         btnVoltarLivro = (Button) findViewById(R.id.btnVoltarLivro);
@@ -72,18 +73,13 @@ public class CadastroLivrosActivity extends AppCompatActivity {
 
                 else {
                     Livro livro = new Livro(titulo, editora, Integer.parseInt(ano));
-                    //LivrosHelper.getInstance().addLivro(livro);
-                    SQLiteDatabase db = helper.getWritableDatabase();
-                    ContentValues valores = new ContentValues();
-                    valores.put(FeiraLivrosContract.Livro.COLUMN_NAME_TITULO, livro.getTitulo());
-                    valores.put(FeiraLivrosContract.Livro.COLUMN_NAME_EDITORA, livro.getEditora());
-                    valores.put(FeiraLivrosContract.Livro.COLUMN_NAME_ANO, livro.getAno());
-                    db.insert(FeiraLivrosContract.Livro.TABLE_NAME,null,valores);
 
                     txtTitulo.setText("");
                     txtEditora.setText("");
                     txtAno.setText("");
                     txtTitulo.requestFocus();
+
+                    livrosAdapter.inserir(livro);
 
                     Toast.makeText(CadastroLivrosActivity.this, livro.getTitulo() + " cadastrado!", Toast.LENGTH_SHORT).show();
                 }
@@ -93,6 +89,7 @@ public class CadastroLivrosActivity extends AppCompatActivity {
         btnVoltarLivro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setResult(RESULT_CANCELED);
                 finish();
             }
         });

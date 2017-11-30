@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.sonserina.ufjf.slytherinpride.R;
+import com.sonserina.ufjf.slytherinpride.adapter.ParticipanteAdapter;
 import com.sonserina.ufjf.slytherinpride.dao.FeiraLivrosDBHelper;
 import com.sonserina.ufjf.slytherinpride.helper.ParticipanteHelper;
 import com.sonserina.ufjf.slytherinpride.models.Participante;
@@ -24,6 +25,7 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
     private Button btnVoltar;
     private EditText txtNomeParticipante;
     private EditText txtEmailParticipante;
+    private ParticipanteAdapter participanteAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
         btnVoltar = (Button) findViewById(R.id.btnVoltar);
         txtNomeParticipante = (EditText) findViewById(R.id.txtNomeParticipante);
         txtEmailParticipante = (EditText) findViewById(R.id.txtEmailParticipante);
+        participanteAdapter = new ParticipanteAdapter(getBaseContext(),null);
 
         btnSalvarParticipante.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,12 +54,11 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
                 }
                 else {
                     Participante p = new Participante(nome,email);
-                    SQLiteDatabase db = openOrCreateDatabase(NOME_BD, MODE_PRIVATE, null),
 
-                    ParticipanteHelper.getInstance().addParticipante(p);
                     txtNomeParticipante.setText("");
                     txtEmailParticipante.setText("");
-                    txtNomeParticipante.requestFocus();
+
+                    participanteAdapter.inserir(p);
 
                     Toast.makeText(CadastroParticipanteActivity.this, "Participante cadastrado!", Toast.LENGTH_SHORT).show();
                 }
@@ -66,6 +68,7 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
         btnVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                setResult(RESULT_CANCELED);
                 finish();
             }
         });
