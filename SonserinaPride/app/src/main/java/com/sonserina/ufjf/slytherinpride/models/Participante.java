@@ -45,6 +45,14 @@ public class Participante implements Parcelable  {
         }
     };
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getNome() {
         return nome;
     }
