@@ -15,6 +15,7 @@ import com.sonserina.ufjf.slytherinpride.dao.FeiraLivrosDBHelper;
 import com.sonserina.ufjf.slytherinpride.dao.ParticipanteContract;
 import com.sonserina.ufjf.slytherinpride.models.Participante;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -22,11 +23,13 @@ import java.util.Date;
  */
 
 public class ParticipanteAdapter extends CursorAdapter {
+    private SimpleDateFormat formatoData;
     private FeiraLivrosDBHelper feiraLivrosDBHelper;
 
     public ParticipanteAdapter(Context context, Cursor c) {
         super(context, c, 0);
         feiraLivrosDBHelper = new FeiraLivrosDBHelper(context);
+        formatoData = new SimpleDateFormat("dd-MM-yyyy-HH:mm:ss");
     }
 
     @Override
@@ -129,12 +132,14 @@ public class ParticipanteAdapter extends CursorAdapter {
         return p;
     }
 
-    public void longClick(int i, String campo, String data){
+    public void longClick(int i, String campo, Date data){
+        String dataCompleta = formatoData.format(data);
+
         Cursor c = getCursor();
         c.moveToPosition(i);
         String id = c.getString(c.getColumnIndex(ParticipanteContract.Participante._ID));
         ContentValues values = new ContentValues();
-        values.put(campo,data);
+        values.put(campo,dataCompleta);
 
         try{
             SQLiteDatabase db = feiraLivrosDBHelper.getWritableDatabase();

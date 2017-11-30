@@ -13,6 +13,7 @@ import com.sonserina.ufjf.slytherinpride.R;
 import com.sonserina.ufjf.slytherinpride.adapter.LivrosAdapter;
 import com.sonserina.ufjf.slytherinpride.adapter.ParticipanteAdapter;
 import com.sonserina.ufjf.slytherinpride.dao.FeiraLivrosDBHelper;
+import com.sonserina.ufjf.slytherinpride.dao.ParticipanteContract;
 import com.sonserina.ufjf.slytherinpride.models.Livro;
 import com.sonserina.ufjf.slytherinpride.models.Participante;
 
@@ -25,17 +26,17 @@ public class MainActivity extends AppCompatActivity {
     Button btnCadastraLivros;
     ListView lstParticipantes;
     ListView lstLivros;
+
     private ParticipanteAdapter participanteAdapter;
     private LivrosAdapter livrosAdapter;
-
-    FeiraLivrosDBHelper helper;
+    private FeiraLivrosDBHelper feiraLivrosDBHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        helper = new FeiraLivrosDBHelper(getApplicationContext());
+        feiraLivrosDBHelper = new FeiraLivrosDBHelper(getApplicationContext());
 
         //instancia objetos da view
         lstParticipantes = (ListView) findViewById(R.id.lstParticipantes);
@@ -44,14 +45,12 @@ public class MainActivity extends AppCompatActivity {
         btnCadastraReserva = (Button) findViewById(R.id.btnCadastraReserva);
         btnCadastraLivros = (Button) findViewById(R.id.btnCadastraLivros);
 
-        //popula lista de participantes com uma view cheia de nomes, criada no participante adapter.
-        participanteAdapter = new ParticipanteAdapter(getBaseContext(), null);
-        lstParticipantes.setAdapter(participanteAdapter);
-        participanteAdapter.atualizar();
-
+        feiraLivrosDBHelper = new FeiraLivrosDBHelper(getApplicationContext());
         livrosAdapter = new LivrosAdapter(getBaseContext(), null);
-        lstLivros.setAdapter(livrosAdapter);
+        participanteAdapter = new ParticipanteAdapter(getBaseContext(), null);
 
+        lstParticipantes.setAdapter(participanteAdapter);
+        lstLivros.setAdapter(livrosAdapter);
 
         btnCadastrarParticipante.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,21 +85,18 @@ public class MainActivity extends AppCompatActivity {
         lstParticipantes.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Participante p = participanteAdapter.getItem(position);
-                if(p.getDataEntrada()==null){
-                    p.setDataEntrada(Calendar.getInstance().getTime());
 
+                Participante p = participanteAdapter.getParticipante(position);
+                if(p.getDataEntrada()==null){
+                    participanteAdapter.longClick(position, ParticipanteContract.Participante.COLUMN_NAME_ENTRADA, Calendar.getInstance().getTime());
                     Toast.makeText(MainActivity.this, getResources().getText(R.string.entrada), Toast.LENGTH_SHORT).show();
                 }
                 else if(p.getDataSaida()==null){
-                    p.setDataSaida(Calendar.getInstance().getTime());
-
+                    participanteAdapter.longClick(position, ParticipanteContract.Participante.COLUMN_NAME_SAIDA, Calendar.getInstance().getTime());
                     Toast.makeText(MainActivity.this, getResources().getText(R.string.saida), Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    p.setDataEntrada(null);
-                    p.setDataSaida(null);
-
+                    participanteAdapter.removeDatas(position);
                     Toast.makeText(MainActivity.this, getResources().getText(R.string.anulado), Toast.LENGTH_SHORT).show();
                 }
                 return true;
@@ -110,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         lstParticipantes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Participante part = participanteAdapter.getItem(position);
+                Participante part = participanteAdapter.getParticipante(position);
                 Intent in = new Intent(MainActivity.this, ParticipanteActivity.class);
                 in.putExtra("participante", part);
                 startActivity(in);
@@ -120,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         lstLivros.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Livro livro = livrosAdapter.getItem(position);
+                Livro livro = livrosAdapter.getLivro(position);
                 Intent in = new Intent(MainActivity.this, LivroActivity.class);
                 in.putExtra("livro", livro);
                 startActivity(in);

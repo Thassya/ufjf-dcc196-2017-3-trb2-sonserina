@@ -79,8 +79,8 @@ public class LivrosAdapter extends CursorAdapter {
         }
     }
 
-    public Livro getLivro(String id){
-        Livro l= new Livro();
+    public Livro getLivro(int id){
+        Livro l = new Livro();
         try {
             SQLiteDatabase db = feiraLivrosDBHelper.getReadableDatabase();
             String[] visao = {
