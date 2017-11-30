@@ -20,26 +20,26 @@ public class FeiraLivrosDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(FeiraLivrosContract.Livro.SQL_CREATE_LIVRO);
-        sqLiteDatabase.execSQL(FeiraLivrosContract.Participante.SQL_CREATE_PARTICIPANTE);
-        sqLiteDatabase.execSQL(FeiraLivrosContract.Reserva.SQL_CREATE_RESERVA);
-        Log.i("FEIRA", "Tabelas Criadas! v" + DATABASE_VERSION);
+        sqLiteDatabase.execSQL(LivroContract.Livro.SQL_CREATE_LIVRO);
+        sqLiteDatabase.execSQL(ParticipanteContract.Participante.SQL_CREATE_PARTICIPANTE);
+        sqLiteDatabase.execSQL(ReservaContract.SQL_CREATE_RESERVA);
+        Log.i("FEIRA Livros", "Tabelas Criadas! v" + DATABASE_VERSION);
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int antigo, int novo) {
-        sqLiteDatabase.execSQL(FeiraLivrosContract.Livro.SQL_DROP_LIVRO);
-        sqLiteDatabase.execSQL(FeiraLivrosContract.Participante.SQL_DROP_PARTICIPANTE);
-        sqLiteDatabase.execSQL(FeiraLivrosContract.Reserva.SQL_DROP_RESERVA);
+        sqLiteDatabase.execSQL(LivroContract.Livro.SQL_DROP_LIVRO);
+        sqLiteDatabase.execSQL(ParticipanteContract.Participante.SQL_DROP_PARTICIPANTE);
+        sqLiteDatabase.execSQL(ReservaContract.SQL_DROP_RESERVA);
 
-        Log.i("FEIRA", "Tabelas atualizadas de v" + antigo + " para v" + novo);
+        Log.i("FEIRA Livros", "Tabelas atualizadas de v" + antigo + " para v" + novo);
         onCreate(sqLiteDatabase);
     }
 
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.i("FEIRA", "Tabelas revertidas de v" + oldVersion + " para v" + newVersion);
+        Log.i("FEIRA Livros", "Tabelas revertidas de v" + oldVersion + " para v" + newVersion);
         onUpgrade(db,oldVersion,newVersion);
     }
 }

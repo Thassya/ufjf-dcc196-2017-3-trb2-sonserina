@@ -1,7 +1,6 @@
 package com.sonserina.ufjf.slytherinpride.activity;
 
 import android.content.Intent;
-import android.icu.text.MessagePattern;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,13 +12,10 @@ import android.widget.Toast;
 import com.sonserina.ufjf.slytherinpride.R;
 import com.sonserina.ufjf.slytherinpride.adapter.LivrosAdapter;
 import com.sonserina.ufjf.slytherinpride.adapter.ParticipanteAdapter;
-import com.sonserina.ufjf.slytherinpride.helper.LivrosHelper;
-import com.sonserina.ufjf.slytherinpride.helper.ParticipanteHelper;
-import com.sonserina.ufjf.slytherinpride.helper.ReservaHelper;
+import com.sonserina.ufjf.slytherinpride.dao.FeiraLivrosDBHelper;
 import com.sonserina.ufjf.slytherinpride.models.Livro;
 import com.sonserina.ufjf.slytherinpride.models.Participante;
 
-import java.nio.file.Files;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,10 +28,14 @@ public class MainActivity extends AppCompatActivity {
     private ParticipanteAdapter participanteAdapter;
     private LivrosAdapter livrosAdapter;
 
+    FeiraLivrosDBHelper helper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        helper = new FeiraLivrosDBHelper(getApplicationContext());
 
         //instancia objetos da view
         lstParticipantes = (ListView) findViewById(R.id.lstParticipantes);
@@ -45,10 +45,11 @@ public class MainActivity extends AppCompatActivity {
         btnCadastraLivros = (Button) findViewById(R.id.btnCadastraLivros);
 
         //popula lista de participantes com uma view cheia de nomes, criada no participante adapter.
-        participanteAdapter = new ParticipanteAdapter(getApplicationContext(), ParticipanteHelper.getInstance().getListaParticipantes());
+        participanteAdapter = new ParticipanteAdapter(getBaseContext(), null);
         lstParticipantes.setAdapter(participanteAdapter);
+        participanteAdapter.atualizar();
 
-        livrosAdapter = new LivrosAdapter(getApplicationContext(), LivrosHelper.getInstance().getListaLivros());
+        livrosAdapter = new LivrosAdapter(getBaseContext(), null);
         lstLivros.setAdapter(livrosAdapter);
 
 

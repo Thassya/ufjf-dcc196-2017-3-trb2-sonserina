@@ -1,6 +1,7 @@
 package com.sonserina.ufjf.slytherinpride.activity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.sonserina.ufjf.slytherinpride.R;
+import com.sonserina.ufjf.slytherinpride.dao.FeiraLivrosDBHelper;
 import com.sonserina.ufjf.slytherinpride.helper.ParticipanteHelper;
 import com.sonserina.ufjf.slytherinpride.models.Participante;
 
@@ -22,7 +24,6 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
     private Button btnVoltar;
     private EditText txtNomeParticipante;
     private EditText txtEmailParticipante;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,8 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
                 }
                 else {
                     Participante p = new Participante(nome,email);
+                    SQLiteDatabase db = openOrCreateDatabase(NOME_BD, MODE_PRIVATE, null),
+
                     ParticipanteHelper.getInstance().addParticipante(p);
                     txtNomeParticipante.setText("");
                     txtEmailParticipante.setText("");

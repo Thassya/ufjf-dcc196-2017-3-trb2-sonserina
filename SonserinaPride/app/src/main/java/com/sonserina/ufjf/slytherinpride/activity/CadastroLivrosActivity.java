@@ -10,10 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.sonserina.ufjf.slytherinpride.R;
-import com.sonserina.ufjf.slytherinpride.adapter.LivrosAdapter;
-import com.sonserina.ufjf.slytherinpride.dao.FeiraLivrosContract;
 import com.sonserina.ufjf.slytherinpride.dao.FeiraLivrosDBHelper;
-import com.sonserina.ufjf.slytherinpride.helper.LivrosHelper;
 import com.sonserina.ufjf.slytherinpride.models.Livro;
 
 import java.util.Calendar;

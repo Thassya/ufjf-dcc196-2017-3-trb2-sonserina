@@ -1,50 +1,76 @@
 package com.sonserina.ufjf.slytherinpride.adapter;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.TextView;
 import com.sonserina.ufjf.slytherinpride.R;
-import com.sonserina.ufjf.slytherinpride.models.Participante;
-import java.util.Comparator;
-import java.util.List;
+import com.sonserina.ufjf.slytherinpride.dao.FeiraLivrosDBHelper;
 
 /**
  * Created by thassya on 21/10/17.
  */
 
-public class ParticipanteAdapter extends ArrayAdapter<Participante> {
+public class ParticipanteAdapter extends CursorAdapter {
+    private FeiraLivrosDBHelper feiraLivrosDBHelper;
 
-    private static final Comparator<Participante> comparatorParticipante = new Comparator<Participante>() {
-        public int compare(Participante p1, Participante p2) {
-            return p1.getNome().toLowerCase().compareTo(p2.getNome().toLowerCase());
-        }
-    };
-
-    public ParticipanteAdapter(Context context, List<Participante> objects) {
-        super(context, 0, objects);
-    }
-
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        Participante participante = getItem(position);
-        if(convertView==null){
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.lista_view, parent,false);
-        }
-        TextView txt_lista = convertView.findViewById(R.id.txt_lista);
-        txt_lista.setText(participante.getNome());
-        //sem email..
-        return convertView;
+    public ParticipanteAdapter(Context context, Cursor c) {
+        super(context, c, 0);
+        feiraLivrosDBHelper = new FeiraLivrosDBHelper(context);
     }
 
     @Override
-    public void notifyDataSetChanged() {
-        this.setNotifyOnChange(false);
-        this.sort(comparatorParticipante);
-        super.notifyDataSetChanged();
-        this.setNotifyOnChange(true);
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        return LayoutInflater.from(context).inflate(R.layout.cadastro_participante, parent,false);
     }
+
+    @Override
+    public void bindView(View view, Context context, Cursor cursor) {
+        TextView txtNome = (TextView) view.findViewById(R.id.txtNomeParticipante);
+        TextView txtEmail = (TextView) view.findViewById(R.id.txtEmailParticipante);
+
+        String nome = cursor.getString(cursor.getColumnIndexOrThrow(FeiraLivrosContract.Participante.COLUMN_NAME_NOME));
+        String email = cursor.getString(cursor.getColumnIndexOrThrow(FeiraLivrosContract.Participante.COLUMN_NAME_EMAIL));
+
+        txtNome.setText(nome);
+        txtEmail.setText(email);
+    }
+
+    public void atualizar(){
+        try {
+            SQLiteDatabase db = feiraLivrosDBHelper.getReadableDatabase();
+            String[] visao = {
+                    FeiraLivrosContract.Participante._ID,
+                    FeiraLivrosContract.Participante.COLUMN_NAME_NOME,
+                    FeiraLivrosContract.Participante.COLUMN_NAME_EMAIL
+            };
+            String sort = FeiraLivrosContract.Participante.COLUMN_NAME_NOME + " DESC";
+            Cursor c = db.query(FeiraLivrosContract.Participante.TABLE_NAME, visao, null, null, null, null, sort);
+            this.changeCursor(c);
+        }
+        catch (Exception e) {
+            Log.e("PARTICIPANTE", e.getLocalizedMessage());
+            Log.e("PARTICIPANTE", e.getStackTrace().toString());
+        }
+    }
+
+    public void inserir(){
+        try{
+            SQLiteDatabase db = feiraLivrosDBHelper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+
+            values.put(BibliotecaContract.Livro.COLUMN_NAME_TITULO, "Livro "+rnd.nextInt(100));
+
+        }
+        catch(Exception e){
+
+        }
+    }
+
 }
