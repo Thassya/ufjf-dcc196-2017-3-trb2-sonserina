@@ -45,12 +45,14 @@ public class CadastroReseraActivity extends AppCompatActivity {
 
         btnSalvarReserva = (Button) findViewById(R.id.btnSalvarReserva);
         btnVoltarReserva = (Button) findViewById(R.id.btnVoltarReserva);
+
         spnParticipantes = (Spinner) findViewById(R.id.spnParticipantes);
         spnLivros = (Spinner) findViewById(R.id.spnLivros);
 
         livrosAdapter = new LivrosAdapter(getBaseContext(),null);
         participanteAdapter = new ParticipanteAdapter(getBaseContext(),null);
         reservaAdapter = new ReservaAdapter(getBaseContext(),null);
+
         livrosAdapter.atualizar();
         participanteAdapter.atualizar();
 

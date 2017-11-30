@@ -49,8 +49,11 @@ public class MainActivity extends AppCompatActivity {
         livrosAdapter = new LivrosAdapter(getBaseContext(), null);
         participanteAdapter = new ParticipanteAdapter(getBaseContext(), null);
 
-        lstParticipantes.setAdapter(participanteAdapter);
+        livrosAdapter.atualizar();
+        participanteAdapter.atualizar();
+
         lstLivros.setAdapter(livrosAdapter);
+        lstParticipantes.setAdapter(participanteAdapter);
 
         btnCadastrarParticipante.setOnClickListener(new View.OnClickListener() {
             @Override

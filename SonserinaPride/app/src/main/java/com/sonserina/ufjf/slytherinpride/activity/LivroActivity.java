@@ -44,7 +44,7 @@ public class LivroActivity extends AppCompatActivity {
             txtEditora.setText(livro.getEditora());
             txtAno.setText(String.valueOf(livro.getAno()));
 
-            reservaAdapter = new ReservaAdapter(getApplicationContext(), ReservaHelper.getInstance().getLstReservasLivros(livro));
+            reservaAdapter = new ReservaAdapter(getBaseContext(), null);
             lstParticipantes.setAdapter(reservaAdapter);
         }
 

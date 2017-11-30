@@ -15,6 +15,8 @@ import com.sonserina.ufjf.slytherinpride.dao.FeiraLivrosDBHelper;
 import com.sonserina.ufjf.slytherinpride.helper.ParticipanteHelper;
 import com.sonserina.ufjf.slytherinpride.models.Participante;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * Created by thassya on 21/10/17.
  */
@@ -58,9 +60,13 @@ public class CadastroParticipanteActivity extends AppCompatActivity {
                     txtNomeParticipante.setText("");
                     txtEmailParticipante.setText("");
 
-                    participanteAdapter.inserir(p);
-
-                    Toast.makeText(CadastroParticipanteActivity.this, "Participante cadastrado!", Toast.LENGTH_SHORT).show();
+                   try{
+                       participanteAdapter.inserir(p);
+                       Toast.makeText(CadastroParticipanteActivity.this, "Participante cadastrado!", Toast.LENGTH_SHORT).show();
+                   }
+                   catch (Exception e){
+                       Toast.makeText(CadastroParticipanteActivity.this, "OPS! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                   }
                 }
             }
         });

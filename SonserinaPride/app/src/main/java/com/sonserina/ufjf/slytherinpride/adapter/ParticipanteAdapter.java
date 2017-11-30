@@ -73,8 +73,10 @@ public class ParticipanteAdapter extends CursorAdapter {
 
             values.put(ParticipanteContract.Participante.COLUMN_NAME_NOME, p.getNome());
             values.put(ParticipanteContract.Participante.COLUMN_NAME_EMAIL, p.getEmail());
-            values.put(ParticipanteContract.Participante.COLUMN_NAME_ENTRADA, p.getDataEntrada().toString());
-            values.put(ParticipanteContract.Participante.COLUMN_NAME_SAIDA,p.getDataSaida().toString());
+            if(p.getDataEntrada()!=null)
+                values.put(ParticipanteContract.Participante.COLUMN_NAME_ENTRADA, p.getDataEntrada().toString());
+            if(p.getDataSaida()!= null)
+                values.put(ParticipanteContract.Participante.COLUMN_NAME_SAIDA,p.getDataSaida().toString());
 
             long id = db.insert(ParticipanteContract.Participante.TABLE_NAME, null, values);
             atualizar();
