@@ -11,7 +11,7 @@ import android.util.Log;
 
 public class FeiraLivrosDBHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "feiraLivros.db";
 
     public FeiraLivrosDBHelper(Context context) {
@@ -22,6 +22,7 @@ public class FeiraLivrosDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(LivroContract.Livro.SQL_CREATE_LIVRO);
         sqLiteDatabase.execSQL(ParticipanteContract.Participante.SQL_CREATE_PARTICIPANTE);
+        Log.i("FEIRA  ", ParticipanteContract.Participante.SQL_CREATE_PARTICIPANTE);
         sqLiteDatabase.execSQL(ReservaContract.SQL_CREATE_RESERVA);
         Log.i("FEIRA Livros", "Tabelas Criadas! v" + DATABASE_VERSION);
 

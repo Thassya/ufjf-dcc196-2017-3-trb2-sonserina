@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
         feiraLivrosDBHelper = new FeiraLivrosDBHelper(getApplicationContext());
 
-        //instancia objetos da view
         lstParticipantes = (ListView) findViewById(R.id.lstParticipantes);
         lstLivros = (ListView) findViewById(R.id.lstLivros);
         btnCadastrarParticipante = (Button) findViewById(R.id.btnCadastrarParticipante);
@@ -52,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
         livrosAdapter.atualizar();
         participanteAdapter.atualizar();
 
-        lstLivros.setAdapter(livrosAdapter);
         lstParticipantes.setAdapter(participanteAdapter);
+        lstLivros.setAdapter(livrosAdapter);
 
         btnCadastrarParticipante.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +130,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         participanteAdapter.notifyDataSetChanged();
         livrosAdapter.notifyDataSetChanged();
+
+        livrosAdapter.atualizar();
+        participanteAdapter.atualizar();
+
         super.onResume();
     }
 

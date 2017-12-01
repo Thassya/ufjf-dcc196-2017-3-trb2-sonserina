@@ -54,10 +54,10 @@ public class ParticipanteAdapter extends CursorAdapter {
                     ParticipanteContract.Participante.COLUMN_NAME_NOME,
                     ParticipanteContract.Participante.COLUMN_NAME_EMAIL,
                     ParticipanteContract.Participante.COLUMN_NAME_ENTRADA,
-                    ParticipanteContract.Participante.COLUMN_NAME_SAIDA,
+                    ParticipanteContract.Participante.COLUMN_NAME_SAIDA
             };
             String sort = ParticipanteContract.Participante.COLUMN_NAME_NOME + " DESC";
-            Cursor c = db.query(ParticipanteContract.Participante.TABLE_NAME, visao, null, null, null, null, sort);
+            Cursor c = db.query(ParticipanteContract.Participante.TABLE_NAME, visao, null, null, null, null, null);
             this.changeCursor(c);
         }
         catch (Exception e) {
@@ -73,6 +73,7 @@ public class ParticipanteAdapter extends CursorAdapter {
 
             values.put(ParticipanteContract.Participante.COLUMN_NAME_NOME, p.getNome());
             values.put(ParticipanteContract.Participante.COLUMN_NAME_EMAIL, p.getEmail());
+
             if(p.getDataEntrada()!=null)
                 values.put(ParticipanteContract.Participante.COLUMN_NAME_ENTRADA, p.getDataEntrada().toString());
             if(p.getDataSaida()!= null)
@@ -120,17 +121,31 @@ public class ParticipanteAdapter extends CursorAdapter {
     }
 
     public Participante getParticipante(int i){
-        Participante p= new Participante();
-        Cursor c = getCursor();
-        c.moveToPosition(i);
-        p.setNome(c.getString(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_NOME)));
-        p.setEmail(c.getString(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_EMAIL)));
+        Participante p = new Participante();
 
-        long entrada = c.getLong((int) c.getLong(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_ENTRADA)));
-        long saida = c.getLong((int) c.getLong(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_SAIDA)));
+        try{
+            SQLiteDatabase db = feiraLivrosDBHelper.getReadableDatabase();
+            String[] visao = {
+                    ParticipanteContract.Participante.COLUMN_NAME_NOME,
+                    ParticipanteContract.Participante.COLUMN_NAME_EMAIL,
+                    ParticipanteContract.Participante.COLUMN_NAME_ENTRADA,
+                    ParticipanteContract.Participante.COLUMN_NAME_SAIDA,
+            };
+            String selecao = ParticipanteContract.Participante._ID + " = " + i;
+            Cursor c = db.query(ParticipanteContract.Participante.TABLE_NAME, visao, selecao, null,null,null,null);
+            c.moveToFirst();
+            p.setNome(c.getString(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_NOME)));
+            p.setEmail(c.getString(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_EMAIL)));
 
-        p.setDataEntrada(new Date(entrada));
-        p.setDataSaida(new Date(saida));
+            long entrada = c.getLong((int) c.getLong(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_ENTRADA)));
+            long saida = c.getLong((int) c.getLong(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_SAIDA)));
+
+            p.setDataEntrada(new Date(entrada));
+            p.setDataSaida(new Date(saida));
+        }catch (Exception e){
+            Log.e("BUSCAR PARTICIPANTE", e.getLocalizedMessage());
+            Log.e("BUSCAR PARTICIPANTE", e.getStackTrace().toString());
+        }
         return p;
     }
 
