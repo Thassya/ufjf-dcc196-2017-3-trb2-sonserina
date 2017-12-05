@@ -10,9 +10,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.sonserina.ufjf.slytherinpride.R;
+import com.sonserina.ufjf.slytherinpride.adapter.ParticipanteAdapter;
 import com.sonserina.ufjf.slytherinpride.adapter.ReservaAdapter;
 import com.sonserina.ufjf.slytherinpride.helper.ReservaHelper;
 import com.sonserina.ufjf.slytherinpride.models.Participante;
+import com.sonserina.ufjf.slytherinpride.models.Reserva;
 
 /**
  * Created by thassya on 22/10/17.
@@ -24,8 +26,9 @@ public class ParticipanteActivity extends AppCompatActivity {
     TextView txtEmail;
     TextView txtEntrada;
     TextView txtSaida;
-    ListView lstReservas;
+//    ListView lstReservas;
     Button btnVoltar;
+    ParticipanteAdapter participanteAdapter;
     ReservaAdapter reservaAdapter;
 
 
@@ -38,19 +41,25 @@ public class ParticipanteActivity extends AppCompatActivity {
         txtEmail = (TextView) findViewById(R.id.txtEmail);
         txtEntrada = (TextView) findViewById(R.id.txtEntrada);
         txtSaida = (TextView) findViewById(R.id.txtSaida);
-        lstReservas = (ListView) findViewById(R.id.lstReservas);
+//        lstReservas = (ListView) findViewById(R.id.lstReservas);
         btnVoltar = (Button) findViewById(R.id.btnVoltar);
 
-
+        reservaAdapter = new ReservaAdapter(getBaseContext(), null);
+        participanteAdapter = new ParticipanteAdapter(getBaseContext(),null);
         Intent it = getIntent();
-        Participante par = it.getParcelableExtra("participante");
+        String idParticipante = it.getStringExtra("idParticipante");
+        Participante par = participanteAdapter.getParticipante(idParticipante);
+
+
         if(par!=null){
             txtNome.setText(par.getNome());
             txtEmail.setText(par.getEmail());
-            txtSaida.setText(String.valueOf(par.getDataSaida()));
+            txtEntrada.setText(par.getDataEntrada());
+            txtSaida.setText(par.getDataSaida());
 
-            reservaAdapter = new ReservaAdapter(getBaseContext(), null);
-            lstReservas.setAdapter(reservaAdapter);
+//            reservaAdapter.atualizar_p(idParticipante);
+//            lstReservas.setAdapter(reservaAdapter);
+
         }
 
 

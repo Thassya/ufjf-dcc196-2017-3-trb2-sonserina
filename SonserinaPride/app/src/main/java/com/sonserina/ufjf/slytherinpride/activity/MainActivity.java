@@ -14,7 +14,6 @@ import com.sonserina.ufjf.slytherinpride.adapter.LivrosAdapter;
 import com.sonserina.ufjf.slytherinpride.adapter.ParticipanteAdapter;
 import com.sonserina.ufjf.slytherinpride.dao.FeiraLivrosDBHelper;
 import com.sonserina.ufjf.slytherinpride.dao.ParticipanteContract;
-import com.sonserina.ufjf.slytherinpride.models.Livro;
 import com.sonserina.ufjf.slytherinpride.models.Participante;
 
 import java.util.Calendar;
@@ -88,17 +87,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Participante p = participanteAdapter.getParticipante(position);
-                if(p.getDataEntrada()==null){
-                    participanteAdapter.longClick(position, ParticipanteContract.Participante.COLUMN_NAME_ENTRADA, Calendar.getInstance().getTime());
-                    Toast.makeText(MainActivity.this, getResources().getText(R.string.entrada), Toast.LENGTH_SHORT).show();
+                Participante p = participanteAdapter.getParticipante((int)id);
+
+                if(p.getDataEntrada().equals(null) || p.getDataEntrada().equals("")){
+                    participanteAdapter.longClick(position,
+                            ParticipanteContract.Participante.COLUMN_NAME_ENTRADA, Calendar.getInstance().getTime());
+
+                    Toast.makeText(MainActivity.this, getResources().getText(R.string.entrada) + " - " + p.getDataEntrada(), Toast.LENGTH_SHORT).show();
                 }
-                else if(p.getDataSaida()==null){
-                    participanteAdapter.longClick(position, ParticipanteContract.Participante.COLUMN_NAME_SAIDA, Calendar.getInstance().getTime());
+                else if(p.getDataSaida().equals(null) || p.getDataSaida().equals("")){
+                    participanteAdapter.longClick(position,
+                            ParticipanteContract.Participante.COLUMN_NAME_SAIDA, Calendar.getInstance().getTime());
                     Toast.makeText(MainActivity.this, getResources().getText(R.string.saida), Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    participanteAdapter.removeDatas(position);
+                    participanteAdapter.removeDatas((int)id);
                     Toast.makeText(MainActivity.this, getResources().getText(R.string.anulado), Toast.LENGTH_SHORT).show();
                 }
                 return true;
@@ -108,9 +111,8 @@ public class MainActivity extends AppCompatActivity {
         lstParticipantes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Participante part = participanteAdapter.getParticipante(position);
                 Intent in = new Intent(MainActivity.this, ParticipanteActivity.class);
-                in.putExtra("participante", part);
+                in.putExtra("idParticipante", String.valueOf(id));
                 startActivity(in);
             }
         });
@@ -118,9 +120,8 @@ public class MainActivity extends AppCompatActivity {
         lstLivros.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Livro livro = livrosAdapter.getLivro(position);
                 Intent in = new Intent(MainActivity.this, LivroActivity.class);
-                in.putExtra("livro", livro);
+                in.putExtra("idLivro", String.valueOf(id));
                 startActivity(in);
             }
         });

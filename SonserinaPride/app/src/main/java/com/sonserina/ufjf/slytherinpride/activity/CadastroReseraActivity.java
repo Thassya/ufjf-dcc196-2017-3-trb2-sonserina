@@ -64,32 +64,34 @@ public class CadastroReseraActivity extends AppCompatActivity {
         btnSalvarReserva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(spnParticipantes.getSelectedItemPosition()==0){
-                    ((TextView)spnParticipantes.getChildAt(0)).setError(getResources().getString(R.string.selecioneParticipante));
-                }
-                if(spnLivros.getSelectedItemPosition()==0){
-                    ((TextView)spnLivros.getChildAt(0)).setError(getResources().getString(R.string.selecioneLivro));
-                }
-                else {
-                    Participante p = (Participante) spnParticipantes.getSelectedItem();
-                    Livro l = (Livro) spnLivros.getSelectedItem();
+            if(spnParticipantes.getSelectedItemPosition()==-1){
+                ((TextView)spnParticipantes.getChildAt(0)).setError(getResources().getString(R.string.selecioneParticipante));
+            }
+            if(spnLivros.getSelectedItemPosition()==-1){
+                ((TextView)spnLivros.getChildAt(0)).setError(getResources().getString(R.string.selecioneLivro));
+            }
+            else {
+                String idPart = participanteAdapter.getId(spnParticipantes.getSelectedItemPosition());
+                String idLivro = livrosAdapter.getId(spnLivros.getSelectedItemPosition());
 
-                    reservaAdapter.inserirReserva(livrosAdapter.getId(spnLivros.getSelectedItemPosition()),participanteAdapter.getId(spnParticipantes.getSelectedItemPosition()));
+                Participante p = participanteAdapter.getParticipante(idPart);
+                Livro l = livrosAdapter.getLivro(idLivro);
 
-                    spnParticipantes.setSelection(0);
-                    spnLivros.setSelection(0);
+                reservaAdapter.inserirReserva(idLivro,idPart);
 
-                    Toast.makeText(CadastroReseraActivity.this, "Livro " + l.getTitulo() + " reservado para " + p.getNome(), Toast.LENGTH_SHORT).show();
-                }
+                spnParticipantes.setSelection(0);
+                spnLivros.setSelection(0);
+
+                Toast.makeText(CadastroReseraActivity.this, "Livro " + l.getTitulo() + " reservado para " + p.getNome(), Toast.LENGTH_SHORT).show();
+            }
             }
         });
-
 
         btnVoltarReserva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(RESULT_CANCELED);
-                finish();
+            setResult(RESULT_CANCELED);
+            finish();
             }
         });
 

@@ -42,15 +42,36 @@ public class ReservaAdapter extends CursorAdapter {
         txtNome.setText(nome);
     }
 
-    public void atualizar(){
+    public void atualizar(String idLivro){
+        String rawQuery = ReservaContract.Reserva.SQL_CONSULTA_RESERVAS+" WHERE " + ReservaContract.Reserva.COLUMN_NAME_LIVRO + "=" + idLivro;
         try {
             SQLiteDatabase db = feiraLivrosDBHelper.getReadableDatabase();
             String[] visao = {
                     ReservaContract.Reserva.COLUMN_NAME_LIVRO,
                     ReservaContract.Reserva.COLUMN_NAME_PARTICIPANTE,
+
             };
-            String sort = ReservaContract.Reserva.COLUMN_NAME_LIVRO + " DESC";
-            Cursor c = db.query(ReservaContract.Reserva.TABLE_NAME, visao, null, null, null, null, sort);
+            Cursor c = db.rawQuery(rawQuery,null);
+
+            this.changeCursor(c);
+        }
+        catch (Exception e) {
+            Log.e("RESERVA", e.getLocalizedMessage());
+            Log.e("RESERVA", e.getStackTrace().toString());
+        }
+    }
+
+    public void atualizar_p(String idParticipante){
+        String rawQuery = ReservaContract.Reserva.SQL_CONSULTA_RESERVAS_POR_LIVRO + " WHERE " + ReservaContract.Reserva.COLUMN_NAME_PARTICIPANTE + "=" + idParticipante;
+        try {
+            SQLiteDatabase db = feiraLivrosDBHelper.getReadableDatabase();
+            String[] visao = {
+                    ReservaContract.Reserva.COLUMN_NAME_LIVRO,
+                    ReservaContract.Reserva.COLUMN_NAME_PARTICIPANTE,
+
+            };
+            Cursor c = db.rawQuery(rawQuery,null);
+
             this.changeCursor(c);
         }
         catch (Exception e) {

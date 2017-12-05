@@ -14,7 +14,7 @@
     <string name="selecioneLivro">Selecione um Livro</string>
     <string name="entrada">Entrada Registrada!</string>
     <string name="saida">Saída Registrada!</string>
-    <string name="anulado">Registros anulados</string>
+    <string name="anulado">Datas de entrada e saída anuladas</string>
     <string name="detalhesParticipante">Detalhes Participante</string>
     <string name="detalhesLivro">Detalhe Livros</string>
 

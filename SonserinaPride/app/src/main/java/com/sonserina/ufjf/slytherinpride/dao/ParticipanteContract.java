@@ -25,8 +25,8 @@ public class ParticipanteContract {
                 _ID + TYPE_INT +  " PRIMARY KEY AUTOINCREMENT " + SEP +
                 COLUMN_NAME_NOME + TYPE_TEXT + SEP +
                 COLUMN_NAME_EMAIL + TYPE_TEXT + SEP +
-                COLUMN_NAME_ENTRADA + TYPE_DATE + SEP +
-                COLUMN_NAME_SAIDA + TYPE_DATE + ")";
+                COLUMN_NAME_ENTRADA + TYPE_TEXT + SEP +
+                COLUMN_NAME_SAIDA + TYPE_TEXT + ")";
 
         public static final String SQL_DROP_PARTICIPANTE = " DROP TABLE IF EXISTS " + TABLE_NAME;
     }

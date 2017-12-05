@@ -15,6 +15,8 @@ import com.sonserina.ufjf.slytherinpride.dao.FeiraLivrosDBHelper;
 import com.sonserina.ufjf.slytherinpride.dao.ParticipanteContract;
 import com.sonserina.ufjf.slytherinpride.models.Participante;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -42,8 +44,9 @@ public class ParticipanteAdapter extends CursorAdapter {
         TextView txtNome = (TextView) view.findViewById(R.id.txt_lista);
 
         String nome = cursor.getString(cursor.getColumnIndexOrThrow(ParticipanteContract.Participante.COLUMN_NAME_NOME));
+        int id = cursor.getInt(cursor.getColumnIndexOrThrow(ParticipanteContract.Participante._ID));
 
-        txtNome.setText(nome);
+        txtNome.setText((id) + " - " + nome);
     }
 
     public void atualizar(){
@@ -73,11 +76,8 @@ public class ParticipanteAdapter extends CursorAdapter {
 
             values.put(ParticipanteContract.Participante.COLUMN_NAME_NOME, p.getNome());
             values.put(ParticipanteContract.Participante.COLUMN_NAME_EMAIL, p.getEmail());
-
-            if(p.getDataEntrada()!=null)
-                values.put(ParticipanteContract.Participante.COLUMN_NAME_ENTRADA, p.getDataEntrada().toString());
-            if(p.getDataSaida()!= null)
-                values.put(ParticipanteContract.Participante.COLUMN_NAME_SAIDA,p.getDataSaida().toString());
+            values.put(ParticipanteContract.Participante.COLUMN_NAME_ENTRADA, p.getDataEntrada());
+            values.put(ParticipanteContract.Participante.COLUMN_NAME_SAIDA,p.getDataSaida());
 
             long id = db.insert(ParticipanteContract.Participante.TABLE_NAME, null, values);
             atualizar();
@@ -106,12 +106,8 @@ public class ParticipanteAdapter extends CursorAdapter {
 
             p.setNome(c.getString(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_NOME)));
             p.setEmail(c.getString(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_EMAIL)));
-
-            long entrada = c.getLong((int) c.getLong(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_ENTRADA)));
-            p.setDataEntrada(new Date(entrada));
-            long saida = c.getLong((int) c.getLong(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_SAIDA)));
-            p.setDataSaida(new Date(saida));
-
+            p.setDataEntrada(c.getString(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_ENTRADA)));
+            p.setDataSaida(c.getString(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_SAIDA)));
         } catch (Exception e) {
             Log.e("BUSCA_PARTICIPANTE", e.getLocalizedMessage());
             Log.e("BUSCA_PARTICIPANTE", e.getStackTrace().toString());
@@ -136,12 +132,10 @@ public class ParticipanteAdapter extends CursorAdapter {
             c.moveToFirst();
             p.setNome(c.getString(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_NOME)));
             p.setEmail(c.getString(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_EMAIL)));
+            p.setDataEntrada(c.getString(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_ENTRADA)));
+            p.setDataSaida(c.getString(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_SAIDA)));
 
-            long entrada = c.getLong((int) c.getLong(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_ENTRADA)));
-            long saida = c.getLong((int) c.getLong(c.getColumnIndex(ParticipanteContract.Participante.COLUMN_NAME_SAIDA)));
 
-            p.setDataEntrada(new Date(entrada));
-            p.setDataSaida(new Date(saida));
         }catch (Exception e){
             Log.e("BUSCAR PARTICIPANTE", e.getLocalizedMessage());
             Log.e("BUSCAR PARTICIPANTE", e.getStackTrace().toString());
@@ -179,8 +173,10 @@ public class ParticipanteAdapter extends CursorAdapter {
         values.put(ParticipanteContract.Participante.COLUMN_NAME_SAIDA,"");
         try {
             SQLiteDatabase db = feiraLivrosDBHelper.getWritableDatabase();
-            db.update(ParticipanteContract.Participante.TABLE_NAME, values, "_id="+id, null);
+            db.update(ParticipanteContract.Participante.TABLE_NAME, values, ParticipanteContract.Participante._ID + "=" +id, null);
+
             atualizar();
+
         } catch (Exception e) {
             Log.e("LIMPADATA PARTICIPANTE", e.getLocalizedMessage());
             Log.e("LIMPADATA PARTICIPANTE", e.getStackTrace().toString());

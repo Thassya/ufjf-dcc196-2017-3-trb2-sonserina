@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.sonserina.ufjf.slytherinpride.R;
 import com.sonserina.ufjf.slytherinpride.dao.FeiraLivrosDBHelper;
 import com.sonserina.ufjf.slytherinpride.dao.LivroContract;
+import com.sonserina.ufjf.slytherinpride.dao.ParticipanteContract;
 import com.sonserina.ufjf.slytherinpride.models.Livro;
 
 import java.util.Comparator;
@@ -42,7 +43,9 @@ public class LivrosAdapter extends CursorAdapter {
         TextView txtTitulo = (TextView) view.findViewById(R.id.txt_lista);
 
         String titulo = cursor.getString(cursor.getColumnIndexOrThrow(LivroContract.Livro.COLUMN_NAME_TITULO));
-        txtTitulo.setText(titulo);
+        int id = cursor.getInt(cursor.getColumnIndexOrThrow(LivroContract.Livro._ID));
+
+        txtTitulo.setText(id + " - " + titulo);
     }
 
     public void atualizar() {
@@ -54,7 +57,7 @@ public class LivrosAdapter extends CursorAdapter {
                     LivroContract.Livro.COLUMN_NAME_EDITORA,
                     LivroContract.Livro.COLUMN_NAME_ANO,
             };
-            String sort = LivroContract.Livro.COLUMN_NAME_TITULO + " DESC";
+            String sort = LivroContract.Livro.COLUMN_NAME_TITULO + " ASC";
             Cursor c = db.query(LivroContract.Livro.TABLE_NAME, visao, null, null, null, null, sort);
             this.changeCursor(c);
 
@@ -102,6 +105,30 @@ public class LivrosAdapter extends CursorAdapter {
         }
         return livro;
     }
+
+    public Livro getLivro(String id){
+        Livro l= new Livro();
+        try {
+            SQLiteDatabase db = feiraLivrosDBHelper.getReadableDatabase();
+            String[] visao = {
+                    LivroContract.Livro.COLUMN_NAME_TITULO,
+                    LivroContract.Livro.COLUMN_NAME_EDITORA,
+                    LivroContract.Livro.COLUMN_NAME_ANO,
+            };
+            String selecao = LivroContract.Livro._ID+" = "+id;
+            Cursor c = db.query(LivroContract.Livro.TABLE_NAME, visao, selecao, null, null, null, null);
+            c.moveToFirst();
+            l.setTitulo(c.getString(c.getColumnIndex(LivroContract.Livro.COLUMN_NAME_TITULO)));
+            l.setEditora(c.getString(c.getColumnIndex(LivroContract.Livro.COLUMN_NAME_EDITORA)));
+            l.setAno(c.getInt(c.getColumnIndex(LivroContract.Livro.COLUMN_NAME_ANO)));
+
+        } catch (Exception e) {
+            Log.e("BUSCA_LIVRO", e.getLocalizedMessage());
+            Log.e("BUSCA_LIVRO", e.getStackTrace().toString());
+        }
+        return l;
+    }
+
     public String getId(int i){
         Cursor c = getCursor();
         c.moveToPosition(i);

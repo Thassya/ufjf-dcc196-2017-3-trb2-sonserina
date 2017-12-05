@@ -3,6 +3,7 @@ package com.sonserina.ufjf.slytherinpride.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -13,8 +14,8 @@ import java.util.Date;
 public class Participante implements Parcelable  {
     private String nome;
     private String email;
-    private Date dataEntrada;
-    private Date dataSaida;
+    private String dataEntrada;
+    private String dataSaida;
 
     public Participante() {
     }
@@ -29,8 +30,8 @@ public class Participante implements Parcelable  {
     private Participante(Parcel from){
         nome = from.readString();
         email = from.readString();
-        dataEntrada = new Date(from.readLong());
-        dataSaida = new Date(from.readLong());
+        dataEntrada =from.readString();
+        dataSaida = from.readString();
     }
 
     public static final Creator<Participante> CREATOR = new Creator<Participante>() {
@@ -61,19 +62,19 @@ public class Participante implements Parcelable  {
         return email;
     }
 
-    public Date getDataEntrada() {
+    public String getDataEntrada() {
         return dataEntrada;
     }
 
-    public void setDataEntrada(Date dataEntrada) {
+    public void setDataEntrada(String dataEntrada) {
         this.dataEntrada = dataEntrada;
     }
 
-    public Date getDataSaida() {
+    public String getDataSaida() {
         return dataSaida;
     }
 
-    public void setDataSaida(Date dataSaida) {
+    public void setDataSaida(String dataSaida) {
         this.dataSaida = dataSaida;
     }
 
@@ -92,8 +93,8 @@ public class Participante implements Parcelable  {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(nome);
         dest.writeString(email);
-        dest.writeLong(dataEntrada == null ? -1 : dataEntrada.getTime());
-        dest.writeLong(dataSaida == null ? -1 : dataSaida.getTime());
+        dest.writeString(dataEntrada);
+        dest.writeString(dataSaida);
     }
 
     @Override
