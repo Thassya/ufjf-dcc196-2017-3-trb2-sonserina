@@ -89,13 +89,13 @@ public class MainActivity extends AppCompatActivity {
 
                 Participante p = participanteAdapter.getParticipante((int)id);
 
-                if(p.getDataEntrada().equals(null) || p.getDataEntrada().equals("")){
+                if(p.getDataEntrada() == null || p.getDataEntrada().equals("")){
                     participanteAdapter.longClick(position,
                             ParticipanteContract.Participante.COLUMN_NAME_ENTRADA, Calendar.getInstance().getTime());
 
-                    Toast.makeText(MainActivity.this, getResources().getText(R.string.entrada) + " - " + p.getDataEntrada(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getResources().getText(R.string.entrada), Toast.LENGTH_SHORT).show();
                 }
-                else if(p.getDataSaida().equals(null) || p.getDataSaida().equals("")){
+                else if(p.getDataSaida() == null || p.getDataSaida().equals("")){
                     participanteAdapter.longClick(position,
                             ParticipanteContract.Participante.COLUMN_NAME_SAIDA, Calendar.getInstance().getTime());
                     Toast.makeText(MainActivity.this, getResources().getText(R.string.saida), Toast.LENGTH_SHORT).show();

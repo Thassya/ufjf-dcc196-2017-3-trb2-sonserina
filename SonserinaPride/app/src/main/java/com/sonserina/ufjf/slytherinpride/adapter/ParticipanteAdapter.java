@@ -166,8 +166,10 @@ public class ParticipanteAdapter extends CursorAdapter {
 
     public void removeDatas(int i){
         Cursor c = getCursor();
-        c.moveToPosition(i);
+        c.moveToPosition(i-1);
         String id = c.getString(c.getColumnIndex(ParticipanteContract.Participante._ID));
+
+
         ContentValues values = new ContentValues();
         values.put(ParticipanteContract.Participante.COLUMN_NAME_ENTRADA,"");
         values.put(ParticipanteContract.Participante.COLUMN_NAME_SAIDA,"");
